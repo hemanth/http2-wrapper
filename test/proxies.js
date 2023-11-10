@@ -263,7 +263,7 @@ test.serial('HTTPS over HTTP/2 - 403', wrapper, async (t, server) => {
 		request.end();
 
 		const error = await pEvent(request, 'error');
-		t.is(error.message, 'The proxy server rejected the request with status code 403');
+		t.is(error.message, 'The proxy server rejected the request with status code 403 (empty status message)');
 
 		http2.globalAgent.destroy();
 	});
@@ -282,7 +282,7 @@ test.serial('HTTPS over HTTP/2 - proxy does not exist', wrapper, async (t, serve
 	request.end();
 
 	const error = await pEvent(request, 'error');
-	t.is(error.message, 'connect ECONNREFUSED 127.0.0.1:443');
+	t.regex(error.message, /^connect ECONNREFUSED (127\.0\.0\.1|::1):443$/);
 });
 
 // ============================ HTTP over HTTP/2 ============================
@@ -362,7 +362,7 @@ test.serial('HTTP over HTTP/2 - 403', async t => {
 		request.end();
 
 		const error = await pEvent(request, 'error');
-		t.is(error.message, 'The proxy server rejected the request with status code 403');
+		t.is(error.message, 'The proxy server rejected the request with status code 403 (empty status message)');
 
 		http2.globalAgent.destroy();
 	});
@@ -386,7 +386,7 @@ test.serial('HTTP over HTTP/2 - proxy does not exist', wrapper, async (t, server
 	request.end();
 
 	const error = await pEvent(request, 'error');
-	t.is(error.message, 'connect ECONNREFUSED 127.0.0.1:443');
+	t.regex(error.message, /^connect ECONNREFUSED (127\.0\.0\.1|::1):443$/);
 });
 
 // ============================ HTTP/2 over HTTPS ============================
@@ -534,7 +534,7 @@ test.serial('HTTP/2 over HTTPS - 403', wrapper, async (t, server) => {
 		request.end();
 
 		const error = await pEvent(request, 'error');
-		t.is(error.message, 'The proxy server rejected the request with status code 403');
+		t.is(error.message, 'The proxy server rejected the request with status code 403 (Forbidden)');
 
 		agent.destroy();
 		http2.globalAgent.destroy();
@@ -556,7 +556,7 @@ test.serial('HTTP/2 over HTTPS - proxy does not exist', wrapper, async (t, serve
 	request.end();
 
 	const error = await pEvent(request, 'error');
-	t.is(error.message, 'connect ECONNREFUSED 127.0.0.1:443');
+	t.regex(error.message, /^connect ECONNREFUSED (127\.0\.0\.1|::1):443$/);
 });
 
 // ============================ HTTP/2 over HTTP ============================
@@ -700,7 +700,7 @@ test.serial('HTTP/2 over HTTP - 403', wrapper, async (t, server) => {
 		request.end();
 
 		const error = await pEvent(request, 'error');
-		t.is(error.message, 'The proxy server rejected the request with status code 403');
+		t.is(error.message, 'The proxy server rejected the request with status code 403 (Forbidden)');
 
 		agent.destroy();
 		http2.globalAgent.destroy();
@@ -723,7 +723,7 @@ test.serial('HTTP/2 over HTTP - proxy does not exist', wrapper, async (t, server
 	request.end();
 
 	const error = await pEvent(request, 'error');
-	t.is(error.message, 'connect ECONNREFUSED 127.0.0.1:443');
+	t.regex(error.message, /^connect ECONNREFUSED (127\.0\.0\.1|::1):443$/);
 });
 
 // ============================ HTTP/2 over HTTP/2 ============================
@@ -868,7 +868,7 @@ test.serial('HTTP/2 over HTTP/2 - 403', wrapper, async (t, server) => {
 		request.end();
 
 		const error = await pEvent(request, 'error');
-		t.is(error.message, 'The proxy server rejected the request with status code 403');
+		t.is(error.message, 'The proxy server rejected the request with status code 403 (empty status message)');
 
 		http2.globalAgent.destroy();
 	});
@@ -887,5 +887,5 @@ test.serial('HTTP/2 over HTTP/2 - proxy does not exist', wrapper, async (t, serv
 	request.end();
 
 	const error = await pEvent(request, 'error');
-	t.is(error.message, 'connect ECONNREFUSED 127.0.0.1:443');
+	t.regex(error.message, /^connect ECONNREFUSED (127\.0\.0\.1|::1):443$/);
 });
